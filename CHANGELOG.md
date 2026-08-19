@@ -4,6 +4,12 @@ All notable changes to `edge-studio` are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html) at the package level.
 
+## [Unreleased] feat/custom-coming-soon-page
+
+### Added
+
+- Added a "Custom" sidebar nav item and coming-soon page for the upcoming module builder.
+
 ## [0.38.11] 2026-08-18
 
 ### Added

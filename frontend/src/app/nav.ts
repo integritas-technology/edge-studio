@@ -1,5 +1,6 @@
 import {
   Activity,
+  Blocks,
   Cable,
   CreditCard,
   House,
@@ -24,5 +25,6 @@ export const nav: NavItem[] = [
   { id: "workflows", label: "Workflows", icon: Workflow },
   { id: "diagnostics", label: "Diagnostics", icon: Activity },
   { id: "marketplace", label: "Marketplace", icon: ShoppingCart, badge: "Coming soon" },
+  { id: "custom", label: "Custom", icon: Blocks, badge: "Coming soon" },
   { id: "settings", label: "Settings", icon: Settings },
 ];

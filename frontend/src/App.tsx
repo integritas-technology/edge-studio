@@ -3,6 +3,7 @@ import { AppShell } from "./components/AppShell";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { ToastProvider } from "./components/ToastProvider";
 import { AuthProvider, useAuth } from "./features/auth";
+import { CustomPage } from "./pages/CustomPage";
 import { DashboardPage } from "./pages/DashboardPage";
 import { DataSourcesPage } from "./pages/DataSourcesPage";
 import { DiagnosticsPage } from "./pages/DiagnosticsPage";
@@ -47,6 +48,7 @@ function AppContent() {
         <Route path="/workflows/:workflowId/watch/:runId" element={<AutomationPage />} />
         <Route path="/diagnostics" element={<DiagnosticsPage />} />
         <Route path="/marketplace" element={<MarketplacePage />} />
+        <Route path="/custom" element={<CustomPage />} />
         <Route path="/settings" element={<AuthSettingsPage />} />
         <Route path="/update" element={<UpdatePage />} />
         <Route path="*" element={<NotFoundPage />} />

@@ -12,6 +12,7 @@ export type NavId =
   | "workflows"
   | "diagnostics"
   | "marketplace"
+  | "custom"
   | "settings";
 export type NavItem = { id: NavId; label: string; icon: LucideIcon; badge?: string };
 
