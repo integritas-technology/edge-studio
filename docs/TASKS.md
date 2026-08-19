@@ -24,7 +24,7 @@
 ## Next
 
 - [ ] Add privileged host-agent capability management so camera support can be enabled from the app after install — see `docs/plans/host-agent-capability-management.md`.
-- [ ] On a real device or a local `install.sh` run, confirm end-to-end that `last-applied-manifest.json` gets written and a Feedback submission's `app.version` reflects it (see `docs/adr/0006-app-version-single-source-of-truth.md`).
+- [ ] On a real device, confirm a Feedback submission's `app.version` reflects `last-applied-manifest.json` (see `docs/adr/0006-app-version-single-source-of-truth.md`) — the write itself is now confirmed: a real Pi `install.sh` run logged `Recorded last-applied-manifest.json (version=v0.38.11)`, and a `docker pull unauthorized` blocker hit on the same run (GHCR packages defaulted private post org-migration) is fixed, see `docs/adr/0008-manifest-served-from-github-raw.md` Consequences.
 - [ ] Implement the hosted feedback receiver endpoint in the Integritas API repo — see `docs/plans/feedback.md` Step 8.
 - [ ] Manual browser check of the rebuilt Automation "Workflows" table (`AutomationWorkflowsList.tsx`): filter/search, pagination, pause/play, the overflow menu's six actions, and the delete flow now going through confirm → progress modal instead of deleting immediately.
 - [ ] Manual browser check of the rebuilt Automation inbox table (`AutomationInboxTable.tsx`): now full width (previously a bare `<section>` missing `w-full`); filter (All/Unread/Read) + search; the "View preview" modal for each of the four preview formats (text/json/link/image); "Mark read/unread"; and Delete now going through confirm → progress modal instead of deleting immediately.

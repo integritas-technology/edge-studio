@@ -4,21 +4,18 @@ Scratch log for the session in progress. Update it as you go; reset it when a se
 
 ## Progress
 
-Branch `ui/polish`.
+Branch `fix/install-script-manifest`.
 
-- Audited `frontend/src/components/` for unused files: 12 with no importers, plus `TablePager` only reached via unused `ListPagerFilterBar`.
-- Updated `docs/frontend-design-system.md` (unused/superseded inventory, live list replacements), frontend agent rules (`ErrorDetails` → `ErrorDetailPanel`), and `docs/TASKS.md` removal-decision item.
-- Implemented Feedback V2 sender-side hosted delivery: local save first, Integritas upload when an API key is configured, per-submission consent, and delivery status in the local JSON.
-- Added feedback config/retry backend endpoints and fixed hosted endpoint client `POST https://integritas.technology/api/feedback` with existing `x-api-key`/`x-request-id` headers.
-- Updated `README.md`, `SECURITY.md`, `CHANGELOG.md`, and `docs/plans/feedback.md` for hosted feedback behavior and receiver requirements.
-- Verified with `npm run check`, `npm --prefix backend run build`, `npm --prefix frontend run build`, and `docker compose config`.
+- Diagnosed a real Pi `install.sh` failure: manifest fetch/verify succeeded, but `docker pull` failed `unauthorized` on all 3 `ghcr.io/edge-studio-technology/*` images (frontend/backend/update-agent).
+- Root cause: GHCR auto-creates container packages as private on first push (`docker/build-push-action` + `GITHUB_TOKEN`), independent of the parent repo's public visibility — missed after the `integritas-technology` -> `edge-studio-technology` org migration recreated the packages. Contradicted the "already public on GHCR" premise in `docs/adr/0008-manifest-served-from-github-raw.md`.
+- Confirmed via `ghcr.io` token-endpoint probes (target packages returned `UNAUTHORIZED` at `/token` itself, vs. a known-public control package which issued a token fine) and `gh api` 403s showing the local token lacked `read:packages`.
+- User fixed manually (no code change): org owner relaxed an org-level "Package creation" visibility restriction, then flipped each of the 3 packages to public individually. Confirmed the install now works.
+- Added a correction note to `docs/adr/0008-manifest-served-from-github-raw.md` (Consequences) recording the false premise and the fix; no new ADR since it corrects an existing decision's premise rather than deciding something new.
 
 ## Next Steps
 
-- Decide whether to delete the superseded unused component files listed in `docs/TASKS.md`.
-- Implement the Integritas API receiver endpoint described in `docs/plans/feedback.md` before enabling hosted delivery in production.
+- [Nothing queued yet.]
 
 ## Notes / Open Questions
 
-- `RadioField` and `Menu` have no call sites but remain the right controls when needed (table row actions use `TableIconMenu`, not `Menu`).
-- Hosted feedback sender is implemented in Edge Studio only; the receiving Integritas API must append/idempotently store submissions by account plus Pi submission id.
+- Visibility is per-package, not per-push — future pushes to these same 3 package names stay public with no CI change needed. A future 4th image (new package name) would default private again and need the same one-time manual flip.

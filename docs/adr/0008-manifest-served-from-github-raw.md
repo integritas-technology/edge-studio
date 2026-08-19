@@ -57,6 +57,17 @@ into it on every release. A public repo's raw file contents are directly fetchab
   in the future would need a different distribution point.
 - Existing installs with an explicit `MANIFEST_URL` already set (env file, `.env`) are unaffected —
   this only changes the default a fresh install falls back to when `MANIFEST_URL` is unset.
+- **Correction (2026-08-19):** the "images are content-addressed by digest, already public on GHCR"
+  premise above (Alternatives considered) was false in practice — a real Pi install hit `docker pull`
+  `unauthorized` on all three `ghcr.io/edge-studio-technology/*` images. `docker/build-push-action`
+  auto-creates GHCR container packages as private on first push regardless of the parent repo's
+  visibility, and this wasn't caught after the `integritas-technology` -> `edge-studio-technology`
+  org migration recreated the packages. Fixed manually: an org-level "Package creation" restriction
+  under org settings -> Packages had to be relaxed first (org owner only), then each of the three
+  packages' visibility was flipped to public individually. Visibility is per-package, not per-push,
+  so this is a one-time fix — future pushes to these same three package names stay public with no
+  CI change needed. A future fourth image (new package name) would default private again and need
+  the same one-time manual flip.
 
 ## Where this lives in code
 
